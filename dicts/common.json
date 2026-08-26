@@ -282,5 +282,19 @@
     "Mark as read": "标记为已读",
     "Mark as unread": "标记为未读",
     "Send feedback as": "以该身份发送反馈",
-    "Send feedback": "发送反馈"
+    "Send feedback": "发送反馈",
+    "Expand Diffs": "展开差异",
+    "Collapse Diffs": "折叠差异",
+    "Expand Diff": "展开差异",
+    "Collapse Diff": "折叠差异",
+    "Copy Content": "复制内容",
+    "Copy Path": "复制路径",
+    "Copy Relative Path": "复制相对路径",
+    "Search": "搜索",
+    "Show in File Explorer": "在文件资源管理器中显示",
+    "Reveal in File Explorer": "在文件资源管理器中显示",
+    "Reveal in Finder": "在访达中显示",
+    "Show in Finder": "在访达中显示",
+    "Open in Terminal": "在终端中打开",
+    "Open with System Editor": "使用系统编辑器打开"
 }

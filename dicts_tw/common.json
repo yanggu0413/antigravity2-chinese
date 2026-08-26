@@ -282,5 +282,19 @@
     "Mark as read": "標記為已讀",
     "Mark as unread": "標記為未讀",
     "Send feedback as": "以此身分傳送意見回饋",
-    "Send feedback": "傳送意見回饋"
+    "Send feedback": "傳送意見回饋",
+    "Expand Diffs": "展開差異",
+    "Collapse Diffs": "折疊差異",
+    "Expand Diff": "展開差異",
+    "Collapse Diff": "折疊差異",
+    "Copy Content": "複製內容",
+    "Copy Path": "複製路徑",
+    "Copy Relative Path": "複製相對路徑",
+    "Search": "搜尋",
+    "Show in File Explorer": "在檔案總管中顯示",
+    "Reveal in File Explorer": "在檔案總管中顯示",
+    "Reveal in Finder": "在 Finder 中顯示",
+    "Show in Finder": "在 Finder 中顯示",
+    "Open in Terminal": "在終端機中開啟",
+    "Open with System Editor": "使用系統編輯器開啟"
 }
