@@ -78,8 +78,8 @@
     "Plugins are packaged collections of skills and MCPs to help the Agent in Antigravity work with Google developer products. You can always change your choices in Settings.": "插件是打包的技能与 MCP 集合，用于帮助 Antigravity 中的 Agent 与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。",
     "Plugins are packaged collections of skills and MCPs to help the Agent in 反重力智能编程 work with Google developer products. You can always change your choices in Settings.": "插件是打包的技能与 MCP 集合，用于帮助 Antigravity 中的 Agent 与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。",
     "Plugins are packaged collections of skills and MCPs to help the Agent in 反重力智慧程式設計 work with Google developer products. You can always change your choices in Settings.": "插件是打包的技能与 MCP 集合，用于帮助 Antigravity 中的 Agent 与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。",
-    "Plugins are packaged collections of skills and MCPs to help the Agent in": "插件是打包的技能与 MCP 集合，用于帮助 Antigravity 中的 Agent",
-    "work with Google developer products. You can always change your choices in Settings.": "与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。",
+    "Plugins are packaged collections of skills and MCPs to help the Agent in": "插件是打包的技能与 MCP 集合，用于帮助 ",
+    "work with Google developer products. You can always change your choices in Settings.": " 中的 Agent 与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。",
     "Build with Antigravity Plugins": "基于 Antigravity 插件构建",
     "Build With Antigravity Plugins": "基于 Antigravity 插件构建",
     "Core tools and knowledge required to develop for Android": "开发 Android 应用所需的内核工具及知识库。",
@@ -363,5 +363,7 @@
     "Ctrl+Enter On empty prompt, sends next in queue": "Ctrl+Enter 输入框为空时发送队列中的下一条",
     "Queues after the turn": "本轮结束后加入队列",
     "Sends immediately": "立即发送",
-    "On empty prompt, sends next in queue": "输入框为空时发送队列中的下一条"
+    "On empty prompt, sends next in queue": "输入框为空时发送队列中的下一条",
+    "Plugins are packaged collections of skills and MCPs to help the Agent in ": "插件是打包的技能与 MCP 集合，用于帮助 ",
+    " work with Google developer products. You can always change your choices in Settings.": " 中的 Agent 与 Google 开发者产品协同工作。您随时可以在设置中更改您的选择。"
 }
