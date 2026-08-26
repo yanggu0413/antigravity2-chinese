@@ -489,5 +489,15 @@
     "Learn more about ": "了解更多关于 ",
     "Learn more about Turbo Mode": "了解更多关于极速模式 (Turbo Mode) 的信息",
     "Learn more about Full Machine": "了解更多关于整机访问 (Full Machine) 的信息",
-    "Learn more about Custom": "了解更多关于自定义 (Custom) 的信息"
+    "Learn more about Custom": "了解更多关于自定义 (Custom) 的信息",
+    "Also includes": "亦包含",
+    "Also includes ": "亦包含 ",
+    " when working in this project.": "（在此项目中工作时）。",
+    " when working in this project": "（在此项目中工作时）",
+    "when working in this project.": "在此项目中工作时。",
+    "when working in this project": "在此项目中工作时",
+    "Also includes global settings when working in this project.": "在此项目中工作时亦包含全局设置。",
+    "Also includes global settings when working in this project. Learn more.": "在此项目中工作时亦包含全局设置。了解更多。",
+    "Inherits your General settings when working in this project. Learn more.": "在此项目中工作时继承您的通用设置。了解更多。",
+    "Inherits your ": "继承您的 "
 }

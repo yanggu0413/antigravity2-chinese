@@ -489,5 +489,15 @@
     "Learn more about ": "瞭解更多關於 ",
     "Learn more about Turbo Mode": "瞭解更多關於極速模式 (Turbo Mode) 的詳細資訊",
     "Learn more about Full Machine": "瞭解更多關於整部電腦存取 (Full Machine) 的詳細資訊",
-    "Learn more about Custom": "瞭解更多關於自訂 (Custom) 的詳細資訊"
+    "Learn more about Custom": "瞭解更多關於自訂 (Custom) 的詳細資訊",
+    "Also includes": "亦包含",
+    "Also includes ": "亦包含 ",
+    " when working in this project.": "（在此專案中工作時）。",
+    " when working in this project": "（在此專案中工作時）",
+    "when working in this project.": "在此專案中工作時。",
+    "when working in this project": "在此專案中工作時",
+    "Also includes global settings when working in this project.": "在此專案中工作時亦包含全域設定。",
+    "Also includes global settings when working in this project. Learn more.": "在此專案中工作時亦包含全域設定。瞭解更多。",
+    "Inherits your General settings when working in this project. Learn more.": "在此專案中工作時繼承您的一般設定。瞭解更多。",
+    "Inherits your ": "繼承您的 "
 }
