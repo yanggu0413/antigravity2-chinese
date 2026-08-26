@@ -390,6 +390,7 @@ function generateJs() {
                 } else if (/^Refreshes in (.+)$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^Refreshes in (.+)$/i, (match, timeStr) => {
                         let formatted = timeStr
+                            .replace(/[\\.\\?\\s]+$/, '')
                             .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
                             .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
                             .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
@@ -409,15 +410,17 @@ function generateJs() {
                             translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
                         }
                         let formattedTime = timeStr
+                            .replace(/[\\.\\?\\s]+$/, '')
                             .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
                             .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
                             .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
                             .replace(/(\\d+)\\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
                             .replace(/,\\s*/g, ' ')
                             .trim();
+                        const prefixLimit = translatedLimit.match(/^\\d/) ? (" " + translatedLimit) : translatedLimit;
                         return USE_TW 
-                            ? ("您已使用了部分" + translatedLimit + "，將在 " + formattedTime + " 後完全更新。")
-                            : ("您已使用了部分" + translatedLimit + "，将在 " + formattedTime + " 后完全刷新。");
+                            ? ("您已使用了部分" + prefixLimit + "，將在 " + formattedTime + " 後完全更新。")
+                            : ("您已使用了部分" + prefixLimit + "，将在 " + formattedTime + " 后完全刷新。");
                     });
                 } else if (/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\\??$/i.test(valNorm) || /^You have reached your (.+?), it will (fully )?refresh in (.+?)\\??$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^You have reached your (.+?)( limit)?, it will (fully )?refresh in (.+?)\\??$/i, (match, limitType, hasLimit, fully, timeStr) => {
@@ -430,15 +433,17 @@ function generateJs() {
                             translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
                         }
                         let formattedTime = timeStr
+                            .replace(/[\\.\\?\\s]+$/, '')
                             .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
                             .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
                             .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
                             .replace(/(\\d+)\\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
                             .replace(/,\\s*/g, ' ')
                             .trim();
+                        const prefixLimit = translatedLimit.match(/^\\d/) ? (" " + translatedLimit) : translatedLimit;
                         return USE_TW 
-                            ? ("您已達到" + translatedLimit + "，將在 " + formattedTime + " 後重設。")
-                            : ("您已达到" + translatedLimit + "，将在 " + formattedTime + " 后重置。");
+                            ? ("您已達到" + prefixLimit + "，將在 " + formattedTime + " 後重設。")
+                            : ("您已达到" + prefixLimit + "，将在 " + formattedTime + " 后重置。");
                     });
                 } else if (/^Learn more about\\s*(.*)$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^Learn more about\\s*(.*)$/i, (match, p) => {
