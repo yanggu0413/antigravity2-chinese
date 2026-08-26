@@ -147,5 +147,19 @@
     "The Apigee API hub remote MCP server lets you manage the APIs, versions, specs, operations, deployments, attributes, external APIs, and dependencies registered in...": "Apigee API hub 遠端 MCP 伺服器可讓您管理註冊在平台中的 API、版本、規格、操作、部署、屬性、外部 API 以及相依性...",
     "The Apigee API hub remote MCP server lets you manage the APIs, versions, specs, operations, deployments, attributes, external APIs, and dependencies registered in your Apigee API hub.": "Apigee API hub 遠端 MCP 伺服器可讓您管理註冊在 Apigee API hub 中的 API、版本、規格、操作、部署、屬性、外部 API 以及相依性。",
     "The Google Home Developer MCP server allows you to search through Google Home documentation, OpenThread and Matter specifications documentation.": "Google Home Developer MCP 伺服器支援檢索 Google Home 文件、OpenThread 與 Matter 規格文件。",
-    "The Cloud Quotas MCP server allows you to view quota allocations, request quota increases, and manage Quota Adjuster configurations.": "Cloud Quotas MCP 伺服器支援檢視配額分配、申請提升配額以及管理 Quota Adjuster 自動調整設定。"
+    "The Cloud Quotas MCP server allows you to view quota allocations, request quota increases, and manage Quota Adjuster configurations.": "Cloud Quotas MCP 伺服器支援檢視配額分配、申請提升配額以及管理 Quota Adjuster 自動調整設定。",
+    "Dart and Flutter": "Dart 與 Flutter",
+    "Skills providing tailored instructions for happy path Dart and Flutter development workflows.": "提供針對 Dart 與 Flutter 最佳開發工作流程量身打造的技能指引。",
+    "Skills providing tailored instructions for happy path Dart and Flutter development workflows": "提供針對 Dart 與 Flutter 最佳開發工作流程量身打造的技能指引",
+    "Google Maps Platform": "Google Maps Platform",
+    "Build and prototype location-aware applications with Google Maps Platform. Integrate interactive maps, search and inspect Places details, calculate optimal routes.": "使用 Google Maps Platform 建構與原型設計位置感知應用程式。整合互動式地圖、搜尋並檢視地點詳細資訊，以及計算最佳路線。",
+    "Build and prototype location-aware applications with Google Maps Platform. Integrate interactive maps, search and inspect Places details, calculate optimal routes": "使用 Google Maps Platform 建構與原型設計位置感知應用程式。整合互動式地圖、搜尋並檢視地點詳細資訊，以及計算最佳路線",
+    "Data Agent Kit": "Data Agent Kit",
+    "Specialized suite of skills for data engineers and database practitioners on Google Cloud": "專為 Google Cloud 上的資料工程師與資料庫從業人員打造的專業技能套件。",
+    "Specialized suite of skills for data engineers and database practitioners on Google Cloud.": "專為 Google Cloud 上的資料工程師與資料庫從業人員打造的專業技能套件。",
+    "Gemini API": "Gemini API",
+    "Build applications with the Gemini Interactions API and Live API, including text generation, multi-turn chat, streaming, function calling, managed agents, and real-tim...": "使用 Gemini Interactions API 與 Live API 建構應用程式，支援文字生成、多輪對話、串流輸出、函式呼叫、代管 Agent 以及即時多模態互動...",
+    "Build applications with the Gemini Interactions API and Live API, including text generation, multi-turn chat, streaming, function calling, managed agents, and real-time...": "使用 Gemini Interactions API 與 Live API 建構應用程式，支援文字生成、多輪對話、串流輸出、函式呼叫、代管 Agent 以及即時多模態互動...",
+    "Build applications with the Gemini Interactions API and Live API, including text generation, multi-turn chat, streaming, function calling, managed agents, and real-time multimodal capabilities.": "使用 Gemini Interactions API 與 Live API 建構應用程式，支援文字生成、多輪對話、串流輸出、函式呼叫、代管 Agent 以及即時多模態互動功能。",
+    "Build applications with the Gemini Interactions API and Live API, including text generation, multi-turn chat, streaming, function calling, managed agents, and real-time multimodal capabilities": "使用 Gemini Interactions API 與 Live API 建構應用程式，支援文字生成、多輪對話、串流輸出、函式呼叫、代管 Agent 以及即時多模態互動功能"
 }
