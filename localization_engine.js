@@ -365,9 +365,17 @@ function generateJs() {
                     newVal = valNorm.replace(/^Yes, and always allow '(.+)'$/i, (match, cmd) => {
                         return USE_TW ? ("是，且一律允許執行 '" + cmd + "'") : ("是，且始终允许运行 '" + cmd + "'");
                     });
-                } else if (/^(\\d+) tools? enabled$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^(\\d+) tools? enabled$/i, (match, num) => {
-                        return USE_TW ? (num + " 個工具已啟用") : (num + " 个工具已启用");
+                } else if (/^(\\d+)\\s+tools?(\\s+enabled)?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(\\d+)\\s+tools?(\\s+enabled)?$/i, (match, num, enabled) => {
+                        return num + (USE_TW ? " 個工具" : " 个工具") + (enabled ? (USE_TW ? "已啟用" : "已启用") : "");
+                    });
+                } else if (/^(\\d+)\\s+skills?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(\\d+)\\s+skills?$/i, (match, num) => {
+                        return num + (USE_TW ? " 個技能" : " 个技能");
+                    });
+                } else if (/^(\\d+)\\s+rules?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(\\d+)\\s+rules?$/i, (match, num) => {
+                        return num + (USE_TW ? " 條規則" : " 条规则");
                     });
                 } else if (/^Show\\s+(\\d+)\\s+more(\\s+(results?|items?|commands?|options?))?(\\.\\.\\.|…)?$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^Show\\s+(\\d+)\\s+more(\\s+(results?|items?|commands?|options?))?(\\.\\.\\.|…)?$/i, (match, num, p2, type) => {

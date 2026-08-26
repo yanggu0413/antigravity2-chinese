@@ -343,5 +343,13 @@
     "All changes since master": "自 master 以来的所有更改",
     "Review Scope": "审查范围",
     "Review scope": "审查范围",
-    "Select review scope": "选择审查范围"
+    "Select review scope": "选择审查范围",
+    "Hide breakdown": "隐藏细目",
+    "Show breakdown": "显示细目",
+    "Hide Breakdown": "隐藏细目",
+    "Show Breakdown": "显示细目",
+    "View breakdown": "查看细目",
+    "View Breakdown": "查看细目",
+    "Breakdown": "细目",
+    "breakdown": "细目"
 }

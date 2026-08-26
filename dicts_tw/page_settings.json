@@ -504,5 +504,13 @@
     " to be installed": "才能運作",
     "to be installed.": "才能運作。",
     "to be installed": "才能運作",
-    "You can invoke the browser subagent by typing /browser in the conversation input box.": "您可以透過在對話框中輸入 /browser 來呼叫瀏覽器子 Agent。"
+    "You can invoke the browser subagent by typing /browser in the conversation input box.": "您可以透過在對話框中輸入 /browser 來呼叫瀏覽器子 Agent。",
+    "Hide breakdown": "隱藏細目",
+    "Show breakdown": "顯示細目",
+    "Hide Breakdown": "隱藏細目",
+    "Show Breakdown": "顯示細目",
+    "View breakdown": "檢視細目",
+    "View Breakdown": "檢視細目",
+    "Breakdown": "細目",
+    "breakdown": "細目"
 }
