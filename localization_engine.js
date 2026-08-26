@@ -176,22 +176,33 @@ function generateJs() {
     const observedRoots = new WeakSet();
     let isMutatingSelf = false;
 
-    // 1. 程式碼與終端編輯器物理隔離引擎：嚴禁翻譯程式碼塊、終端輸入輸出與編輯器內容
+    // 1. 物理隔離保護引擎：嚴禁干擾使用者輸入框、Agent 思考推理過程、程式碼塊與終端
     const SKIP_TAGS = ['SCRIPT', 'STYLE', 'CODE', 'PRE', 'KBD', 'SAMP', 'TEXTAREA', 'INPUT'];
 
-    function isCodeOrEditor(el) {
+    function isExcludedContainer(el) {
         if (!el) return false;
         let curr = el.nodeType === 1 ? el : el.parentElement;
         let depth = 0;
-        while (curr && depth < 8) {
+        while (curr && depth < 12) {
             const tag = (curr.tagName || '').toUpperCase();
             if (SKIP_TAGS.includes(tag)) return true;
-            if (curr.getAttribute && (curr.getAttribute('translate') === 'no' || (curr.classList && curr.classList.contains('notranslate')))) return true;
+
+            // (A) 任何可編輯輸入區域（Prompt 輸入框、搜尋框、編輯器等）
+            if (curr.isContentEditable || curr.getAttribute('contenteditable') === 'true' || curr.getAttribute('role') === 'textbox') {
+                return true;
+            }
+
+            // (B) 標記不翻譯的元素
+            if (curr.getAttribute && (curr.getAttribute('translate') === 'no' || (curr.classList && curr.classList.contains('notranslate')))) {
+                return true;
+            }
             
+            // (C) 類別名稱精準過濾
             const cls = typeof curr.className === 'string' ? curr.className : (curr.getAttribute && curr.getAttribute('class') || '');
             if (cls) {
                 const cn = cls.toLowerCase();
                 if (
+                    // 程式碼與終端
                     cn.includes('monaco-editor') ||
                     cn.includes('view-lines') ||
                     cn.includes('view-line') ||
@@ -204,11 +215,35 @@ function generateJs() {
                     cn.includes('font-mono') ||
                     cn.includes('font-code') ||
                     cn.includes('hljs') ||
-                    cn.includes('syntax-highlighted')
+                    cn.includes('syntax-highlighted') ||
+                    // 使用者輸入框與編輯器架構 (ProseMirror, Lexical, Draft.js, Composer)
+                    cn.includes('prosemirror') ||
+                    cn.includes('lexical') ||
+                    cn.includes('prompt-input') ||
+                    cn.includes('chat-input') ||
+                    cn.includes('composer') ||
+                    cn.includes('input-container') ||
+                    // Agent 思考推理過程 (Thinking / CoT / Reasoning)
+                    cn.includes('thinking') ||
+                    cn.includes('thought') ||
+                    cn.includes('reasoning') ||
+                    // 對話訊息內文渲染區 (Markdown Body)
+                    cn.includes('markdown') ||
+                    cn.includes('message-content') ||
+                    cn.includes('rendered-markdown') ||
+                    cn.includes('agent-response')
                 ) {
                     return true;
                 }
             }
+
+            // (D) 自訂 data 屬性過濾
+            if (curr.dataset) {
+                if (curr.dataset.thought !== undefined || curr.dataset.thinking !== undefined || curr.dataset.reasoning !== undefined) {
+                    return true;
+                }
+            }
+
             curr = curr.parentElement;
             depth++;
         }
@@ -268,7 +303,7 @@ function generateJs() {
             if (!node || node.isConnected === false) return;
             
             if (node.nodeType === 1) { // ELEMENT_NODE
-                if (isCodeOrEditor(node)) return;
+                if (isExcludedContainer(node)) return;
 
                 // 翻譯屬性：placeholder, title, aria-label
                 for (const attr of ['placeholder', 'title', 'aria-label']) {
@@ -298,7 +333,7 @@ function generateJs() {
                 for (const child of node.childNodes) translateNode(child);
 
             } else if (node.nodeType === 3) { // TEXT_NODE
-                if (isCodeOrEditor(node.parentElement)) return;
+                if (isExcludedContainer(node.parentElement)) return;
                 let originalVal = node.nodeValue;
                 if (!originalVal || originalVal.trim().length < 1) return;
 
