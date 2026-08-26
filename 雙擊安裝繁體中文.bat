@@ -1,38 +1,37 @@
 @echo off
-chcp 65001 >nul
-title Antigravity - 安裝繁體中文在地化
+title Antigravity - �w���c�餤��b�a��
 
 echo.
 echo ======================================================
-echo  歡迎使用 Antigravity 繁體中文在地化安裝程式
+echo  �w��ϥ� Antigravity �c�餤��b�a�Ʀw�˵{��
 echo ======================================================
 echo.
-echo 請選擇左上角品牌顯示方式:
-echo [1] 保持英文 Antigravity（推薦）
-echo [2] 不顯示品牌名稱
-echo [3] 顯示繁體中文品牌名
+echo �п�ܥ��W���~�P��ܤ覡:
+echo [1] �O���^�� Antigravity�]���ˡ^
+echo [2] ����ܫ~�P�W��
+echo [3] ����c�餤��~�P�W
 set "CHOICE_VAL=1"
-set /p "CHOICE_VAL=請輸入選項 [1/2/3] (直接按 Enter 預設為 1): "
+set /p "CHOICE_VAL=�п�J�ﶵ [1/2/3] (������ Enter �w�]�� 1): "
 set "BRAND_ARG=--brand-title english"
 if "%CHOICE_VAL%"=="2" set "BRAND_ARG=--brand-title hidden"
 if "%CHOICE_VAL%"=="3" set "BRAND_ARG=--brand-title translated"
 
 echo.
-echo [1/2] 正在注入繁體中文在地化...
+echo [1/2] ���b�`�J�c�餤��b�a��...
 cd /d "%~dp0"
 node localization_engine.js --tw %BRAND_ARG% %*
 
 if %errorlevel% neq 0 (
     echo.
-    echo 錯誤: 注入失敗，請確認是否已安裝 Node.js。
+    echo ���~: �`�J���ѡA�нT�{�O�_�w�w�� Node.js�C
     pause
     exit /b 1
 )
 
 echo.
-echo [2/2] 完成!
+echo [2/2] ����!
 echo.
-echo 提示: 繁體中文在地化已成功部署。
+echo ����: �c�餤��b�a�Ƥw���\���p�C
 echo.
-echo 視窗將在 5 秒後自動關閉...
+echo �����N�b 5 ����۰�����...
 timeout /t 5
