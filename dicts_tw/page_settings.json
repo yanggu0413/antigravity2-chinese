@@ -461,5 +461,14 @@
     "Inherit General": "繼承一般設定",
     "Inherits your General settings when working in this project.": "在此專案中工作時繼承您的一般設定。",
     "Add to Chat/Quote": "新增至對話/引用",
-    "Toggle Terminal": "切換終端機"
+    "Toggle Terminal": "切換終端機",
+    "Plugins": "外掛程式",
+    "plugins": "外掛程式",
+    "PLUGINS": "外掛程式",
+    "Settings - Plugins": "設定 - 外掛程式",
+    "Build with Google Plugins": "以 Google 外掛程式建構",
+    "Browse and enable plugins from the Build with Google catalog.": "瀏覽並啟用 Build with Google 目錄中的外掛程式。",
+    "Browse and enable plugins from the Build with Antigravity catalog.": "瀏覽並啟用 Build with Antigravity 目錄中的外掛程式。",
+    "Build with Google catalog": "Build with Google 目錄",
+    "Build with Antigravity catalog": "Build with Antigravity 目錄"
 }

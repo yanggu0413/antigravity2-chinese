@@ -461,5 +461,14 @@
     "Inherit General": "继承通用设置",
     "Inherits your General settings when working in this project.": "在此项目中工作时继承您的通用设置。",
     "Add to Chat/Quote": "添加到对话/引用",
-    "Toggle Terminal": "切换终端"
+    "Toggle Terminal": "切换终端",
+    "Plugins": "插件",
+    "plugins": "插件",
+    "PLUGINS": "插件",
+    "Settings - Plugins": "设置 - 插件",
+    "Build with Google Plugins": "基于 Google 插件构建",
+    "Browse and enable plugins from the Build with Google catalog.": "浏览并启用 Build with Google 目录中的插件。",
+    "Browse and enable plugins from the Build with Antigravity catalog.": "浏览并启用 Build with Antigravity 目录中的插件。",
+    "Build with Google catalog": "Build with Google 目录",
+    "Build with Antigravity catalog": "Build with Antigravity 目录"
 }
