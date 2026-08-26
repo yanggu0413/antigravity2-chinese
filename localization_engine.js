@@ -391,6 +391,8 @@ function generateJs() {
                     newVal = valNorm.replace(/^Version\\s+([\\d\\.]+)$/i, (match, v) => {
                         return "版本 " + v;
                     });
+                } else if (/^(now|just now)$/i.test(valNorm)) {
+                    newVal = USE_TW ? "剛剛" : "刚刚";
                 } else if (/^(\\d+)(s|m|h|d|w|mo|yr)$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^(\\d+)(s|m|h|d|w|mo|yr)$/i, (match, num, unit) => {
                         const unitLower = unit.toLowerCase();

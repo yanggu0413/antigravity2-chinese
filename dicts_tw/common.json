@@ -304,5 +304,14 @@
     "No active uploads": "尚無上傳中的項目",
     "No active uploads.": "尚無上傳中的項目。",
     "No active background tasks": "尚無執行中的背景工作",
-    "No active tasks": "尚無執行中的任務"
+    "No active tasks": "尚無執行中的任務",
+    "Conversation Name": "對話名稱",
+    "Conversation ID": "對話 ID",
+    "Project Name": "專案名稱",
+    "Workspace Name": "工作區名稱",
+    "Agent Name": "Agent 名稱",
+    "Now": "剛剛",
+    "now": "剛剛",
+    "Just now": "剛剛",
+    "just now": "剛剛"
 }
