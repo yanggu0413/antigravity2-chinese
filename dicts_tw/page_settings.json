@@ -499,5 +499,10 @@
     "Also includes global settings when working in this project.": "在此專案中工作時亦包含全域設定。",
     "Also includes global settings when working in this project. Learn more.": "在此專案中工作時亦包含全域設定。瞭解更多。",
     "Inherits your General settings when working in this project. Learn more.": "在此專案中工作時繼承您的一般設定。瞭解更多。",
-    "Inherits your ": "繼承您的 "
+    "Inherits your ": "繼承您的 ",
+    " to be installed.": "才能運作。",
+    " to be installed": "才能運作",
+    "to be installed.": "才能運作。",
+    "to be installed": "才能運作",
+    "You can invoke the browser subagent by typing /browser in the conversation input box.": "您可以透過在對話框中輸入 /browser 來呼叫瀏覽器子 Agent。"
 }
