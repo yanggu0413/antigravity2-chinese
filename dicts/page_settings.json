@@ -473,5 +473,16 @@
     "Build with Antigravity catalog": "Build with Antigravity 目录",
     "Automatic Check for Updates": "自动检查更新",
     "Automatic check for updates": "自动检查更新",
-    "Automatically prompt you to restart the app when a new update is available. When disabled, you can check for updates manually from the app menu.": "有新版本可用时自动提示您重启应用。禁用时，您可以从应用菜单手动检查更新。"
+    "Automatically prompt you to restart the app when a new update is available. When disabled, you can check for updates manually from the app menu.": "有新版本可用时自动提示您重启应用。禁用时，您可以从应用菜单手动检查更新。",
+    "Device Name": "设备名称",
+    "Scan the code to open this device in Remote Control, or copy link.": "扫描二维码以在远程控制中打开此设备，或复制链接。",
+    "Scan the code to open this device in Remote Control, or": "扫描二维码以在远程控制中打开此设备，或",
+    "Scan the code to open this device in Remote Control": "扫描二维码以在远程控制中打开此设备",
+    "copy link": "复制链接",
+    "copy link.": "复制链接。",
+    "Copy link": "复制链接",
+    "Copy Link": "复制链接",
+    "Link copied to clipboard": "已将链接复制到剪贴板",
+    "Link copied": "链接已复制",
+    "Copied!": "已复制！"
 }
