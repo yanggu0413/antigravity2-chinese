@@ -165,8 +165,7 @@ function generateJs() {
 
     const jsSource = `${SIGNATURE_START}
 (() => {
-    // V12.0 终极隔离版：基于容器回溯的物理隔离引擎
-    // 逻辑：不再仅仅检查当前标签，而是向上回溯父级，识别“代码/编辑器”禁区
+    // V13.0 企業級高可用防護版：批次微任務防抖 + 虛擬 DOM 隔離 + 物理禁區過濾
     const USE_TW = ${USE_TW ? "true" : "false"};
     const map = new Map(Object.entries(DICT_PLACEHOLDER));
     const lowerMap = new Map();
@@ -174,8 +173,10 @@ function generateJs() {
     
     const longEntries = REPLACEMENT_ENTRIES_PLACEHOLDER;
     const translatedValues = new WeakMap();
+    const observedRoots = new WeakSet();
+    let isMutatingSelf = false;
 
-    // 代码与终端编辑器物理隔离引擎：严禁翻译代码块、终端输入输出与编辑器内容
+    // 1. 程式碼與終端編輯器物理隔離引擎：嚴禁翻譯程式碼塊、終端輸入輸出與編輯器內容
     const SKIP_TAGS = ['SCRIPT', 'STYLE', 'CODE', 'PRE', 'KBD', 'SAMP', 'TEXTAREA', 'INPUT'];
 
     function isCodeOrEditor(el) {
@@ -239,14 +240,37 @@ function generateJs() {
         return null;
     }
 
+    // 2. 批次排程佇列（消除 Mutation 風暴與 React 衝突）
+    const pendingNodes = new Set();
+    let isScheduled = false;
+
+    function scheduleBatch() {
+        if (isScheduled) return;
+        isScheduled = true;
+        const runner = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : (cb => setTimeout(cb, 16));
+        runner(flushBatch);
+    }
+
+    function flushBatch() {
+        isScheduled = false;
+        if (pendingNodes.size === 0) return;
+        const nodes = Array.from(pendingNodes);
+        pendingNodes.clear();
+        for (const node of nodes) {
+            if (node && node.isConnected !== false) {
+                translateNode(node);
+            }
+        }
+    }
+
     function translateNode(node) {
         try {
-            if (!node) return;
+            if (!node || node.isConnected === false) return;
             
-            if (node.nodeType === Node.ELEMENT_NODE) {
+            if (node.nodeType === 1) { // ELEMENT_NODE
                 if (isCodeOrEditor(node)) return;
 
-                // 翻译属性：placeholder, title, aria-label
+                // 翻譯屬性：placeholder, title, aria-label
                 for (const attr of ['placeholder', 'title', 'aria-label']) {
                     const v = node.getAttribute(attr);
                     if (v) {
@@ -273,12 +297,12 @@ function generateJs() {
                 if (node.shadowRoot) translateNode(node.shadowRoot);
                 for (const child of node.childNodes) translateNode(child);
 
-            } else if (node.nodeType === Node.TEXT_NODE) {
+            } else if (node.nodeType === 3) { // TEXT_NODE
                 if (isCodeOrEditor(node.parentElement)) return;
                 let originalVal = node.nodeValue;
                 if (!originalVal || originalVal.trim().length < 1) return;
 
-                // 核心：如果是 skeleton 骨架占位文本，强制打上不翻译标记，防止自动翻译（例如 Google Translate 网页翻译）将其翻译为“装。资料。包装。资料。”
+                // 骨架占位文本標記
                 if (originalVal.toLowerCase().includes('pack.info')) {
                     const parent = node.parentElement;
                     if (parent) {
@@ -300,7 +324,7 @@ function generateJs() {
                 const valNorm = norm(originalVal);
                 const valLower = valNorm.toLowerCase();
                 
-                // 1. 精确匹配（含大小写自动纠正与快捷键检测）
+                // 1. 精確匹配（含大小寫自動糾正與快捷鍵檢測）
                 const shortcutTrans = translateWithShortcut(valNorm);
                 if (shortcutTrans) {
                     newVal = shortcutTrans;
@@ -314,7 +338,7 @@ function generateJs() {
                     newVal = USE_TW ? "Cloud SQL 遠端 MCP 伺服器可讓您存取並執行 Cloud SQL 工具，用於管理 Cloud SQL 執行個體、管理使用者、建立和復原資料備份及資料庫維運。" : "Cloud SQL 远程 MCP 服务器可让您访问并运行 Cloud SQL 工具，用于管理 Cloud SQL 实例、管理用户、创建和恢复数据备份及数据库运维。";
                 } else if (/^The Spanner remote/i.test(valNorm)) {
                     newVal = USE_TW ? "Spanner 遠端 MCP 伺服器可讓您從 AI 開發環境中存取並執行 Spanner 工具，以建立、管理和查詢分散式資料庫資源。" : "Spanner 远程 MCP 服务器可让您从 AI 开发环境中访问并运行 Spanner 工具，以创建、管理和查询分布式数据库资源。";
-                } else if (/^Ask questions\.\s*Get answers\./i.test(valNorm) || /PostHog data/i.test(valNorm)) {
+                } else if (/^Ask questions\\.\\s*Get answers\\./i.test(valNorm) || /PostHog data/i.test(valNorm)) {
                     newVal = USE_TW ? "提問，即得答案。該 MCP 是供您的程式開發 Agent 呼叫的伺服器。用英文提出問題，它會針對您的 PostHog 資料執行查詢，結果將直接呈現在您的編輯器中。" : "提问，即得答案。该 MCP 是供您的编程 Agent 调用的服务器。用英语提出问题，它会针对您的 PostHog 数据运行查询，结果将直接呈现在您的编辑器中。";
                 } else if (/^The GKE remote MCP server/i.test(valNorm)) {
                     newVal = USE_TW ? "GKE 遠端 MCP 伺服器提供對 GKE Kubernetes 資源的讀寫存取權限。允許 AI Agent 檢查並監控您的執行環境。" : "GKE 远程 MCP 服务器提供对 GKE Kubernetes 资源的读写权限。允许 AI Agent 检查并监控您的运行环境。";
@@ -381,8 +405,8 @@ function generateJs() {
                             ? ("您已達到" + translatedLimit + "，將在 " + formattedTime + " 後重設。")
                             : ("您已达到" + translatedLimit + "，将在 " + formattedTime + " 后重置。");
                     });
-                } else if (/^Learn more about\s*(.*)$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Learn more about\s*(.*)$/i, (match, p) => {
+                } else if (/^Learn more about\\s*(.*)$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^Learn more about\\s*(.*)$/i, (match, p) => {
                         if (!p || !p.trim()) {
                             return USE_TW ? "瞭解更多關於" : "了解更多关于";
                         }
@@ -454,16 +478,16 @@ function generateJs() {
                     newVal = valNorm.replace(/^All changes since (.+)$/i, (match, branch) => {
                         return USE_TW ? ("自 " + branch + " 以來的所有變更") : ("自 " + branch + " 以来的所有更改");
                     });
-                } else if (/^including\s+(\\d+)\s+active\s+conversations?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^including\s+(\\d+)\s+active\s+conversations?(\\.)?$/i, (match, num, dot) => {
+                } else if (/^including\\s+(\\d+)\\s+active\\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^including\\s+(\\d+)\\s+active\\s+conversations?(\\.)?$/i, (match, num, dot) => {
                         return (USE_TW ? ("包含 " + num + " 個使用中的對話") : ("包含 " + num + " 个活动对话")) + (dot ? "。" : "");
                     });
-                } else if (/^including\s+(\\d+)\s+conversations?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^including\s+(\\d+)\s+conversations?(\\.)?$/i, (match, num, dot) => {
+                } else if (/^including\\s+(\\d+)\\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^including\\s+(\\d+)\\s+conversations?(\\.)?$/i, (match, num, dot) => {
                         return (USE_TW ? ("包含 " + num + " 個對話") : ("包含 " + num + " 个对话")) + (dot ? "。" : "");
                     });
-                } else if (/^(.+?)\s+including\s+(\\d+)\s+active\s+conversations?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^(.+?)\s+including\s+(\\d+)\s+active\s+conversations?(\\.)?$/i, (match, p, num, dot) => {
+                } else if (/^(.+?)\\s+including\\s+(\\d+)\\s+active\\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(.+?)\\s+including\\s+(\\d+)\\s+active\\s+conversations?(\\.)?$/i, (match, p, num, dot) => {
                         return p + " " + (USE_TW ? ("包含 " + num + " 個使用中的對話") : ("包含 " + num + " 个活动对话")) + (dot ? "。" : "");
                     });
                 } else if (/^(.+?): context deadline exceeded$/i.test(valNorm)) {
@@ -493,8 +517,8 @@ function generateJs() {
                         }
                         return USE_TW ? "以此身分傳送意見回饋：" : "以如下身份发送反馈：";
                     });
-                } else {
-                    // 2. 长句子串滑动替换与前缀截断智能匹配 (缩短至前 18 字符即可高精度命中)
+                } else if (valNorm.length >= 15) {
+                    // 2. 長句子滑動替換（僅在長度 >= 15 時執行，快速短路過濾）
                     for (const [key, translated] of longEntries) {
                         if (key.length > 15 && valNorm.includes(key)) {
                             newVal = newVal.split(key).join(translated);
@@ -506,55 +530,78 @@ function generateJs() {
                     }
                 }
 
+                // 3. 安全寫入（防自觸發與 React 脫鉤節點保護）
                 if (newVal !== originalVal) {
                     translatedValues.set(node, newVal);
-                    node.nodeValue = newVal;
+                    isMutatingSelf = true;
+                    try {
+                        if (node.isConnected !== false) {
+                            node.nodeValue = newVal;
+                        }
+                    } catch (e) {} finally {
+                        isMutatingSelf = false;
+                    }
                 }
             }
         } catch (e) {}
     }
 
+    // 3. 帶有防自觸發與批次排程的 MutationObserver
     const observer = new MutationObserver(mutations => {
+        if (isMutatingSelf) return;
         for (const m of mutations) {
             if (m.type === 'childList') {
-                for (const n of m.addedNodes) translateNode(n);
+                for (const n of m.addedNodes) {
+                    if (n.nodeType === 1 || n.nodeType === 3) {
+                        pendingNodes.add(n);
+                    }
+                }
             } else if (m.type === 'characterData') {
-                translateNode(m.target);
+                if (m.target && m.target.nodeType === 3) {
+                    pendingNodes.add(m.target);
+                }
             }
+        }
+        if (pendingNodes.size > 0) {
+            scheduleBatch();
         }
     });
 
     const obsOpts = { childList: true, subtree: true, characterData: true };
 
+    // 4. 冪等啟動引擎
+    let isInitialized = false;
     const startEngine = () => {
         const target = document.body || document.documentElement;
         if (target) {
-            try {
-                observer.observe(target, obsOpts);
-                translateNode(target);
-            } catch (e) {}
+            if (!isInitialized) {
+                isInitialized = true;
+                try {
+                    observer.observe(target, obsOpts);
+                } catch (e) {}
+            }
+            translateNode(target);
         }
     };
 
+    // 5. ShadowRoot 生命週期監聽防洩漏
     const origAttachShadow = Element.prototype.attachShadow;
     Element.prototype.attachShadow = function() {
         const sr = origAttachShadow.apply(this, arguments);
-        try { observer.observe(sr, obsOpts); } catch(e) {}
+        if (sr && !observedRoots.has(sr)) {
+            observedRoots.add(sr);
+            try { observer.observe(sr, obsOpts); } catch(e) {}
+        }
         return sr;
     };
 
-    // 强力多阶段触发绑定
+    // 6. 優雅事件綁定
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', startEngine);
     } else {
         startEngine();
     }
     window.addEventListener('load', startEngine);
-    setTimeout(startEngine, 100);
-    setTimeout(startEngine, 300);
-    setTimeout(startEngine, 1000);
-    setTimeout(startEngine, 3000);
-    setTimeout(startEngine, 6000);
 })();
 ${SIGNATURE_END}`;
 
