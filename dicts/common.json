@@ -296,5 +296,13 @@
     "Reveal in Finder": "在访达中显示",
     "Show in Finder": "在访达中显示",
     "Open in Terminal": "在终端中打开",
-    "Open with System Editor": "使用系统编辑器打开"
+    "Open with System Editor": "使用系统编辑器打开",
+    "Uploads": "上传",
+    "Terminals": "终端",
+    "No active terminals": "暂无活动终端",
+    "No active terminals.": "暂无活动终端。",
+    "No active uploads": "暂无上传中的项目",
+    "No active uploads.": "暂无上传中的项目。",
+    "No active background tasks": "暂无运行中的后台任务",
+    "No active tasks": "暂无运行中的任务"
 }

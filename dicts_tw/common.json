@@ -296,5 +296,13 @@
     "Reveal in Finder": "在 Finder 中顯示",
     "Show in Finder": "在 Finder 中顯示",
     "Open in Terminal": "在終端機中開啟",
-    "Open with System Editor": "使用系統編輯器開啟"
+    "Open with System Editor": "使用系統編輯器開啟",
+    "Uploads": "上傳",
+    "Terminals": "終端機",
+    "No active terminals": "尚無使用中的終端機",
+    "No active terminals.": "尚無使用中的終端機。",
+    "No active uploads": "尚無上傳中的項目",
+    "No active uploads.": "尚無上傳中的項目。",
+    "No active background tasks": "尚無執行中的背景工作",
+    "No active tasks": "尚無執行中的任務"
 }
