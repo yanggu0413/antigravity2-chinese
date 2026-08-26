@@ -525,6 +525,12 @@ function generateJs() {
                     newVal = valNorm.replace(/^(.+?)\\s+including\\s+(\\d+)\\s+active\\s+conversations?(\\.)?$/i, (match, p, num, dot) => {
                         return p + " " + (USE_TW ? ("包含 " + num + " 個使用中的對話") : ("包含 " + num + " 个活动对话")) + (dot ? "。" : "");
                     });
+                } else if (/^(.+?)\\s+Queues after the turn$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(.+?)\\s+Queues after the turn$/i, (m, k) => k + " " + (USE_TW ? "本輪結束後排入佇列" : "本轮结束后加入队列"));
+                } else if (/^(.+?)\\s+Sends immediately$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(.+?)\\s+Sends immediately$/i, (m, k) => k + " " + (USE_TW ? "立即傳送" : "立即发送"));
+                } else if (/^(.+?)\\s+On empty prompt,\\s*sends next in queue$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(.+?)\\s+On empty prompt,\\s*sends next in queue$/i, (m, k) => k + " " + (USE_TW ? "輸入框為空時傳送佇列中的下一則" : "输入框为空时发送队列中的下一条"));
                 } else if (/^(.+?): context deadline exceeded$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^(.+?): context deadline exceeded$/i, (match, prefix) => {
                         return prefix + (USE_TW ? ": 請求超時 (context deadline exceeded)" : ": 请求超时 (context deadline exceeded)");

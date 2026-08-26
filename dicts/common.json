@@ -351,5 +351,17 @@
     "View breakdown": "查看细目",
     "View Breakdown": "查看细目",
     "Breakdown": "细目",
-    "breakdown": "细目"
+    "breakdown": "细目",
+    "Enter Queues after the turn": "Enter 本轮结束后加入队列",
+    "Alt+Enter Sends immediately": "Alt+Enter 立即发送",
+    "Alt+Enter On empty prompt, sends next in queue": "Alt+Enter 输入框为空时发送队列中的下一条",
+    "Option+Enter Sends immediately": "Option+Enter 立即发送",
+    "Option+Enter On empty prompt, sends next in queue": "Option+Enter 输入框为空时发送队列中的下一条",
+    "Cmd+Enter Sends immediately": "Cmd+Enter 立即发送",
+    "Cmd+Enter On empty prompt, sends next in queue": "Cmd+Enter 输入框为空时发送队列中的下一条",
+    "Ctrl+Enter Sends immediately": "Ctrl+Enter 立即发送",
+    "Ctrl+Enter On empty prompt, sends next in queue": "Ctrl+Enter 输入框为空时发送队列中的下一条",
+    "Queues after the turn": "本轮结束后加入队列",
+    "Sends immediately": "立即发送",
+    "On empty prompt, sends next in queue": "输入框为空时发送队列中的下一条"
 }

@@ -351,5 +351,17 @@
     "View breakdown": "檢視細目",
     "View Breakdown": "檢視細目",
     "Breakdown": "細目",
-    "breakdown": "細目"
+    "breakdown": "細目",
+    "Enter Queues after the turn": "Enter 本輪結束後排入佇列",
+    "Alt+Enter Sends immediately": "Alt+Enter 立即傳送",
+    "Alt+Enter On empty prompt, sends next in queue": "Alt+Enter 輸入框為空時傳送佇列中的下一則",
+    "Option+Enter Sends immediately": "Option+Enter 立即傳送",
+    "Option+Enter On empty prompt, sends next in queue": "Option+Enter 輸入框為空時傳送佇列中的下一則",
+    "Cmd+Enter Sends immediately": "Cmd+Enter 立即傳送",
+    "Cmd+Enter On empty prompt, sends next in queue": "Cmd+Enter 輸入框為空時傳送佇列中的下一則",
+    "Ctrl+Enter Sends immediately": "Ctrl+Enter 立即傳送",
+    "Ctrl+Enter On empty prompt, sends next in queue": "Ctrl+Enter 輸入框為空時傳送佇列中的下一則",
+    "Queues after the turn": "本輪結束後排入佇列",
+    "Sends immediately": "立即傳送",
+    "On empty prompt, sends next in queue": "輸入框為空時傳送佇列中的下一則"
 }
