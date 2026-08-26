@@ -175,8 +175,44 @@ function generateJs() {
     const longEntries = REPLACEMENT_ENTRIES_PLACEHOLDER;
     const translatedValues = new WeakMap();
 
-    // 全局畅通版：移除所有禁区规则，允许全局全量无差别汉化
-    const SKIP_TAGS = ['SCRIPT', 'STYLE'];
+    // 代码与终端编辑器物理隔离引擎：严禁翻译代码块、终端输入输出与编辑器内容
+    const SKIP_TAGS = ['SCRIPT', 'STYLE', 'CODE', 'PRE', 'KBD', 'SAMP', 'TEXTAREA', 'INPUT'];
+
+    function isCodeOrEditor(el) {
+        if (!el) return false;
+        let curr = el.nodeType === 1 ? el : el.parentElement;
+        let depth = 0;
+        while (curr && depth < 8) {
+            const tag = (curr.tagName || '').toUpperCase();
+            if (SKIP_TAGS.includes(tag)) return true;
+            if (curr.getAttribute && (curr.getAttribute('translate') === 'no' || (curr.classList && curr.classList.contains('notranslate')))) return true;
+            
+            const cls = typeof curr.className === 'string' ? curr.className : (curr.getAttribute && curr.getAttribute('class') || '');
+            if (cls) {
+                const cn = cls.toLowerCase();
+                if (
+                    cn.includes('monaco-editor') ||
+                    cn.includes('view-lines') ||
+                    cn.includes('view-line') ||
+                    cn.includes('lines-content') ||
+                    cn.includes('xterm') ||
+                    cn.includes('code-block') ||
+                    cn.includes('codeblock') ||
+                    cn.includes('cm-editor') ||
+                    cn.includes('cm-content') ||
+                    cn.includes('font-mono') ||
+                    cn.includes('font-code') ||
+                    cn.includes('hljs') ||
+                    cn.includes('syntax-highlighted')
+                ) {
+                    return true;
+                }
+            }
+            curr = curr.parentElement;
+            depth++;
+        }
+        return false;
+    }
 
     function norm(s) {
         if (!s) return '';
@@ -208,8 +244,7 @@ function generateJs() {
             if (!node) return;
             
             if (node.nodeType === Node.ELEMENT_NODE) {
-                const tag = node.tagName.toUpperCase();
-                if (SKIP_TAGS.includes(tag)) return;
+                if (isCodeOrEditor(node)) return;
 
                 // 翻译属性：placeholder, title, aria-label
                 for (const attr of ['placeholder', 'title', 'aria-label']) {
@@ -239,6 +274,7 @@ function generateJs() {
                 for (const child of node.childNodes) translateNode(child);
 
             } else if (node.nodeType === Node.TEXT_NODE) {
+                if (isCodeOrEditor(node.parentElement)) return;
                 let originalVal = node.nodeValue;
                 if (!originalVal || originalVal.trim().length < 1) return;
 
