@@ -450,7 +450,7 @@
     "Models & Usage": "模型與用量",
     "Manage your model quota and credits.": "管理您的模型配額與額度。",
     "Plan": "方案",
-    "Your Plan:": "您的方案:",
+    "Your Plan:": "您的方案：",
     "Your Plan": "您的方案",
     "Weekly Limit Remaining": "每週剩餘限制",
     "Five Hour Limit Remaining": "五小時剩餘限制",
@@ -515,5 +515,9 @@
     "breakdown": "細目",
     "Permanently delete this project and all of its conversation history.": "永久刪除該專案及其所有對話記錄。",
     "active conversations": "個使用中的對話",
-    "active conversation": "個使用中的對話"
+    "active conversation": "個使用中的對話",
+    "Your Plan: ": "您的方案：",
+    "Your Plan: Google AI Ultra": "您的方案：Google AI Ultra",
+    "Your Plan: Google AI Free": "您的方案：Google AI Free",
+    "You can upgrade to the Google AI Ultra plan for the highest rate limits.": "您可以升級至 Google AI Ultra 方案以取得最高的速率限制。"
 }

@@ -295,51 +295,51 @@ function generateJs() {
                 } else if (/^Refreshes in (.+)$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^Refreshes in (.+)$/i, (match, timeStr) => {
                         let formatted = timeStr
-                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
-                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
-                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
-                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
-                            .replace(/,\s*/g, ' ')
+                            .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\\d+)\\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\\s*/g, ' ')
                             .trim();
                         return USE_TW ? (formatted + " 後更新") : (formatted + " 后刷新");
                     });
-                } else if (/^You have used some of your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i, (match, limitType, fully, timeStr) => {
+                } else if (/^You have used some of your (.+?) limit, it will (fully )?refresh in (.+?)\\??$/i.test(valNorm) || /^You have used some of your (.+?), it will (fully )?refresh in (.+?)\\??$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^You have used some of your (.+?)( limit)?, it will (fully )?refresh in (.+?)\\??$/i, (match, limitType, hasLimit, fully, timeStr) => {
                         let translatedLimit = limitType;
                         if (/weekly/i.test(limitType)) translatedLimit = USE_TW ? "每週限制" : "每周限制";
                         else if (/daily/i.test(limitType)) translatedLimit = USE_TW ? "每日限制" : "每日限制";
                         else if (/monthly/i.test(limitType)) translatedLimit = USE_TW ? "每月限制" : "每月限制";
-                        else if (/(\d+)-hour/i.test(limitType)) {
-                            const h = limitType.match(/(\d+)-hour/i)[1];
+                        else if (/(\\d+)-hour/i.test(limitType)) {
+                            const h = limitType.match(/(\\d+)-hour/i)[1];
                             translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
                         }
                         let formattedTime = timeStr
-                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
-                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
-                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
-                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
-                            .replace(/,\s*/g, ' ')
+                            .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\\d+)\\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\\s*/g, ' ')
                             .trim();
                         return USE_TW 
                             ? ("您已使用了部分" + translatedLimit + "，將在 " + formattedTime + " 後完全更新。")
                             : ("您已使用了部分" + translatedLimit + "，将在 " + formattedTime + " 后完全刷新。");
                     });
-                } else if (/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i, (match, limitType, fully, timeStr) => {
+                } else if (/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\\??$/i.test(valNorm) || /^You have reached your (.+?), it will (fully )?refresh in (.+?)\\??$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^You have reached your (.+?)( limit)?, it will (fully )?refresh in (.+?)\\??$/i, (match, limitType, hasLimit, fully, timeStr) => {
                         let translatedLimit = limitType;
                         if (/weekly/i.test(limitType)) translatedLimit = USE_TW ? "每週限制" : "每周限制";
                         else if (/daily/i.test(limitType)) translatedLimit = USE_TW ? "每日限制" : "每日限制";
                         else if (/monthly/i.test(limitType)) translatedLimit = USE_TW ? "每月限制" : "每月限制";
-                        else if (/(\d+)-hour/i.test(limitType)) {
-                            const h = limitType.match(/(\d+)-hour/i)[1];
+                        else if (/(\\d+)-hour/i.test(limitType)) {
+                            const h = limitType.match(/(\\d+)-hour/i)[1];
                             translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
                         }
                         let formattedTime = timeStr
-                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
-                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
-                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
-                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
-                            .replace(/,\s*/g, ' ')
+                            .replace(/(\\d+)\\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\\d+)\\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\\d+)\\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\\d+)\\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\\s*/g, ' ')
                             .trim();
                         return USE_TW 
                             ? ("您已達到" + translatedLimit + "，將在 " + formattedTime + " 後重設。")
