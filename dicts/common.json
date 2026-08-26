@@ -331,5 +331,17 @@
     "Unstage All Changes": "取消暂存所有更改",
     "Discard Changes": "放弃更改",
     "Discard All Changes": "放弃所有更改",
-    "Commit Message": "提交信息"
+    "Commit Message": "提交信息",
+    "Branch": "分支",
+    "Branch ": "分支 ",
+    "Agent Edits": "Agent 编辑",
+    "Staged index changes and working tree changes": "暂存索引更改与工作目录更改",
+    "Files modified by the agent in this conversation": "此对话中由 Agent 修改的文件",
+    "Files modified by the agent": "由 Agent 修改的文件",
+    "All changes since origin/main": "自 origin/main 以来的所有更改",
+    "All changes since main": "自 main 以来的所有更改",
+    "All changes since master": "自 master 以来的所有更改",
+    "Review Scope": "审查范围",
+    "Review scope": "审查范围",
+    "Select review scope": "选择审查范围"
 }

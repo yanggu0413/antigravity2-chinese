@@ -406,6 +406,10 @@ function generateJs() {
                         else if (unitLower === "yr") unitStr = USE_TW ? "年前" : "年前";
                         return num + unitStr;
                     });
+                } else if (/^All changes since (.+)$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^All changes since (.+)$/i, (match, branch) => {
+                        return USE_TW ? ("自 " + branch + " 以來的所有變更") : ("自 " + branch + " 以来的所有更改");
+                    });
                 } else if (/^(.+?): context deadline exceeded$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^(.+?): context deadline exceeded$/i, (match, prefix) => {
                         return prefix + (USE_TW ? ": 請求超時 (context deadline exceeded)" : ": 请求超时 (context deadline exceeded)");
