@@ -470,5 +470,8 @@
     "Browse and enable plugins from the Build with Google catalog.": "瀏覽並啟用 Build with Google 目錄中的外掛程式。",
     "Browse and enable plugins from the Build with Antigravity catalog.": "瀏覽並啟用 Build with Antigravity 目錄中的外掛程式。",
     "Build with Google catalog": "Build with Google 目錄",
-    "Build with Antigravity catalog": "Build with Antigravity 目錄"
+    "Build with Antigravity catalog": "Build with Antigravity 目錄",
+    "Automatic Check for Updates": "自動檢查更新",
+    "Automatic check for updates": "自動檢查更新",
+    "Automatically prompt you to restart the app when a new update is available. When disabled, you can check for updates manually from the app menu.": "有新版本可用時自動提示您重新啟動應用程式。停用時，您可以從應用程式選單手動檢查更新。"
 }
