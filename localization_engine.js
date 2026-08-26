@@ -292,53 +292,58 @@ function generateJs() {
                     newVal = USE_TW ? "Cloud Quotas MCP 伺服器支援檢視配額分配、申請提升配額以及管理 Quota Adjuster 自動調整設定。" : "Cloud Quotas MCP 服务器支持查看配额分配、申请提升配额以及管理 Quota Adjuster 自动调整配置。";
                 } else if (/^Build, edit, deploy, and manage full-stack web apps with Lovable/i.test(valNorm)) {
                     newVal = USE_TW ? "使用自然語言，藉助 AI 應用程式建構工具 Lovable 建構、編輯、部署和管理全端 Web 應用程式。該 MCP 伺服器將您的 AI 用戶端連接至 Lovable，允許您的 AI Agent 直接在偏好的編輯器或環境內互動、建立和管理 Lovable 專案。" : "使用自然语言，借助 AI 应用构建工具 Lovable 构建、编辑、部署和管理全栈 Web 应用。该 MCP 服务器将您的 AI 客户端连接至 Lovable，允许您的 AI Agent 直接在偏好的编辑器或环境中交互、创建和管理 Lovable 项目。";
-                } else if (/^Refreshes in (\\d+) days?, (\\d+) hours?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Refreshes in (\\d+) days?, (\\d+) hours?$/i, (match, d, h) => {
-                        return USE_TW ? (d + " 天 " + h + " 小時後更新") : (d + " 天 " + h + " 小时后刷新");
+                } else if (/^Refreshes in (.+)$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^Refreshes in (.+)$/i, (match, timeStr) => {
+                        let formatted = timeStr
+                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\s*/g, ' ')
+                            .trim();
+                        return USE_TW ? (formatted + " 後更新") : (formatted + " 后刷新");
                     });
-                } else if (/^Refreshes in (\\d+) hours?, (\\d+) minutes?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Refreshes in (\\d+) hours?, (\\d+) minutes?$/i, (match, h, m) => {
-                        return USE_TW ? (h + " 小時 " + m + " 分鐘後更新") : (h + " 小时 " + m + " 分钟后刷新");
+                } else if (/^You have used some of your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^You have used some of your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i, (match, limitType, fully, timeStr) => {
+                        let translatedLimit = limitType;
+                        if (/weekly/i.test(limitType)) translatedLimit = USE_TW ? "每週限制" : "每周限制";
+                        else if (/daily/i.test(limitType)) translatedLimit = USE_TW ? "每日限制" : "每日限制";
+                        else if (/monthly/i.test(limitType)) translatedLimit = USE_TW ? "每月限制" : "每月限制";
+                        else if (/(\d+)-hour/i.test(limitType)) {
+                            const h = limitType.match(/(\d+)-hour/i)[1];
+                            translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
+                        }
+                        let formattedTime = timeStr
+                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\s*/g, ' ')
+                            .trim();
+                        return USE_TW 
+                            ? ("您已使用了部分" + translatedLimit + "，將在 " + formattedTime + " 後完全更新。")
+                            : ("您已使用了部分" + translatedLimit + "，将在 " + formattedTime + " 后完全刷新。");
                     });
-                } else if (/^Refreshes in (\\d+) days?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Refreshes in (\\d+) days?$/i, (match, d) => {
-                        return USE_TW ? (d + " 天後更新") : (d + " 天后刷新");
-                    });
-                } else if (/^Refreshes in (\\d+) hours?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Refreshes in (\\d+) hours?$/i, (match, h) => {
-                        return USE_TW ? (h + " 小時後更新") : (h + " 小时后刷新");
-                    });
-                } else if (/^Refreshes in (\\d+) minutes?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Refreshes in (\\d+) minutes?$/i, (match, m) => {
-                        return USE_TW ? (m + " 分鐘後更新") : (m + " 分钟后刷新");
-                    });
-                } else if (/^You have used some of your weekly limit, it will fully refresh in (\\d+) days?, (\\d+) hours?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your weekly limit, it will fully refresh in (\\d+) days?, (\\d+) hours?\\.?$/i, (match, d, h) => {
-                        return USE_TW ? ("您已使用了部分每週限制，將在 " + d + " 天 " + h + " 小時後完全更新。") : ("您已使用了部分每周限制，将在 " + d + " 天 " + h + " 小时后完全刷新。");
-                    });
-                } else if (/^You have used some of your weekly limit, it will fully refresh in (\\d+) days?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your weekly limit, it will fully refresh in (\\d+) days?\\.?$/i, (match, d) => {
-                        return USE_TW ? ("您已使用了部分每週限制，將在 " + d + " 天後完全更新。") : ("您已使用了部分每周限制，将在 " + d + " 天后完全刷新。");
-                    });
-                } else if (/^You have used some of your weekly limit, it will fully refresh in (\\d+) hours?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your weekly limit, it will fully refresh in (\\d+) hours?\\.?$/i, (match, h) => {
-                        return USE_TW ? ("您已使用了部分每週限制，將在 " + h + " 小時後完全更新。") : ("您已使用了部分每周限制，将在 " + h + " 小时后完全刷新。");
-                    });
-                } else if (/^You have used some of your weekly limit, it will fully refresh in (\\d+) minutes?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your weekly limit, it will fully refresh in (\\d+) minutes?\\.?$/i, (match, m) => {
-                        return USE_TW ? ("您已使用了部分每週限制，將在 " + m + " 分鐘後完全更新。") : ("您已使用了部分每周限制，将在 " + m + " 分钟后完全刷新。");
-                    });
-                } else if (/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) hours?, (\\d+) minutes?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) hours?, (\\d+) minutes?\\.?$/i, (match, h, m) => {
-                        return USE_TW ? ("您已使用了部分 5 小時限制，將在 " + h + " 小時 " + m + " 分鐘後完全更新。") : ("您已使用了部分 5 小时限制，将在 " + h + " 小时 " + m + " 分钟后完全刷新。");
-                    });
-                } else if (/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) hours?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) hours?\\.?$/i, (match, h) => {
-                        return USE_TW ? ("您已使用了部分 5 小時限制，將在 " + h + " 小時後完全更新。") : ("您已使用了部分 5 小时限制，将在 " + h + " 小时后完全刷新。");
-                    });
-                } else if (/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) minutes?\\.?$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^You have used some of your 5-hour limit, it will fully refresh in (\\d+) minutes?\\.?$/i, (match, m) => {
-                        return USE_TW ? ("您已使用了部分 5 小時限制，將在 " + m + " 分鐘後完全更新。") : ("您已使用了部分 5 小时限制，将在 " + m + " 分钟后完全刷新。");
+                } else if (/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^You have reached your (.+?) limit, it will (fully )?refresh in (.+?)\.?$/i, (match, limitType, fully, timeStr) => {
+                        let translatedLimit = limitType;
+                        if (/weekly/i.test(limitType)) translatedLimit = USE_TW ? "每週限制" : "每周限制";
+                        else if (/daily/i.test(limitType)) translatedLimit = USE_TW ? "每日限制" : "每日限制";
+                        else if (/monthly/i.test(limitType)) translatedLimit = USE_TW ? "每月限制" : "每月限制";
+                        else if (/(\d+)-hour/i.test(limitType)) {
+                            const h = limitType.match(/(\d+)-hour/i)[1];
+                            translatedLimit = USE_TW ? (h + " 小時限制") : (h + " 小时限制");
+                        }
+                        let formattedTime = timeStr
+                            .replace(/(\d+)\s*days?/gi, (m, n) => USE_TW ? (n + " 天") : (n + " 天"))
+                            .replace(/(\d+)\s*hours?/gi, (m, n) => USE_TW ? (n + " 小時") : (n + " 小时"))
+                            .replace(/(\d+)\s*minutes?/gi, (m, n) => USE_TW ? (n + " 分鐘") : (n + " 分钟"))
+                            .replace(/(\d+)\s*seconds?/gi, (m, n) => USE_TW ? (n + " 秒") : (n + " 秒"))
+                            .replace(/,\s*/g, ' ')
+                            .trim();
+                        return USE_TW 
+                            ? ("您已達到" + translatedLimit + "，將在 " + formattedTime + " 後重設。")
+                            : ("您已达到" + translatedLimit + "，将在 " + formattedTime + " 后重置。");
                     });
                 } else if (/^Learn more about (.+)$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^Learn more about (.+)$/i, (match, p) => {
