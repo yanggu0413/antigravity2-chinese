@@ -262,7 +262,7 @@
     "Off": "關閉",
     "Security Preset": "安全性預設",
     "Choose a predefined security preset for the agent. This controls terminal auto-execution policy, and file access policy.": "為 Agent 選擇預先定義的安全性預設。這控制了終端機自動執行原則和檔案存取原則。",
-    "Learn more about Default": "瞭解關於 Default 的詳細資訊",
+    "Learn more about Default": "瞭解更多關於預設 (Default) 的詳細資訊",
     "Local Permissions": "本機權限",
     "Inherits from global settings. Local permissions have higher priority.": "繼承自全域設定。本機權限具有更高的優先順序。",
     "File Access Rules": "檔案存取規則",
@@ -484,5 +484,10 @@
     "Copy Link": "複製連結",
     "Link copied to clipboard": "已將連結複製到剪貼簿",
     "Link copied": "連結已複製",
-    "Copied!": "已複製！"
+    "Copied!": "已複製！",
+    "Learn more about": "瞭解更多關於",
+    "Learn more about ": "瞭解更多關於 ",
+    "Learn more about Turbo Mode": "瞭解更多關於極速模式 (Turbo Mode) 的詳細資訊",
+    "Learn more about Full Machine": "瞭解更多關於整部電腦存取 (Full Machine) 的詳細資訊",
+    "Learn more about Custom": "瞭解更多關於自訂 (Custom) 的詳細資訊"
 }

@@ -345,13 +345,16 @@ function generateJs() {
                             ? ("您已達到" + translatedLimit + "，將在 " + formattedTime + " 後重設。")
                             : ("您已达到" + translatedLimit + "，将在 " + formattedTime + " 后重置。");
                     });
-                } else if (/^Learn more about (.+)$/i.test(valNorm)) {
-                    newVal = valNorm.replace(/^Learn more about (.+)$/i, (match, p) => {
-                        let translatedPreset = p;
-                        if (p.toLowerCase() === 'default') translatedPreset = USE_TW ? "預設 (Default)" : "默认 (Default)";
-                        else if (p.toLowerCase() === 'full machine') translatedPreset = USE_TW ? "整部電腦存取 (Full Machine)" : "整机访问 (Full Machine)";
-                        else if (p.toLowerCase() === 'turbo mode') translatedPreset = USE_TW ? "極速模式 (Turbo Mode)" : "极速模式 (Turbo Mode)";
-                        else if (p.toLowerCase() === 'custom') translatedPreset = USE_TW ? "自訂 (Custom)" : "自定义 (Custom)";
+                } else if (/^Learn more about\s*(.*)$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^Learn more about\s*(.*)$/i, (match, p) => {
+                        if (!p || !p.trim()) {
+                            return USE_TW ? "瞭解更多關於" : "了解更多关于";
+                        }
+                        let translatedPreset = p.trim();
+                        if (/^default$/i.test(translatedPreset)) translatedPreset = USE_TW ? "預設 (Default)" : "默认 (Default)";
+                        else if (/^full machine$/i.test(translatedPreset)) translatedPreset = USE_TW ? "整部電腦存取 (Full Machine)" : "整机访问 (Full Machine)";
+                        else if (/^turbo mode$/i.test(translatedPreset)) translatedPreset = USE_TW ? "極速模式 (Turbo Mode)" : "极速模式 (Turbo Mode)";
+                        else if (/^custom$/i.test(translatedPreset)) translatedPreset = USE_TW ? "自訂 (Custom)" : "自定义 (Custom)";
                         return USE_TW ? ("瞭解更多關於 " + translatedPreset + " 的詳細資訊") : ("了解更多关于 " + translatedPreset + " 的信息");
                     });
                 } else if (/^Yes, and always allow '(.+)' in this project$/i.test(valNorm)) {

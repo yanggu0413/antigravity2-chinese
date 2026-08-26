@@ -263,7 +263,7 @@
     "Off": "关闭",
     "Security Preset": "安全预设",
     "Choose a predefined security preset for the agent. This controls terminal auto-execution policy, and file access policy.": "为 Agent 选择预定义的安全预设。这控制了终端自动执行策略和文件访问策略。",
-    "Learn more about Default": "了解关于 Default 的更多信息",
+    "Learn more about Default": "了解更多关于默认 (Default) 的信息",
     "Local Permissions": "本地权限",
     "Inherits from global settings. Local permissions have higher priority.": "继承自全局设置。本地权限具有更高的优先级。",
     "File Access Rules": "文件访问规则",
@@ -484,5 +484,10 @@
     "Copy Link": "复制链接",
     "Link copied to clipboard": "已将链接复制到剪贴板",
     "Link copied": "链接已复制",
-    "Copied!": "已复制！"
+    "Copied!": "已复制！",
+    "Learn more about": "了解更多关于",
+    "Learn more about ": "了解更多关于 ",
+    "Learn more about Turbo Mode": "了解更多关于极速模式 (Turbo Mode) 的信息",
+    "Learn more about Full Machine": "了解更多关于整机访问 (Full Machine) 的信息",
+    "Learn more about Custom": "了解更多关于自定义 (Custom) 的信息"
 }
