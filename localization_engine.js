@@ -418,6 +418,18 @@ function generateJs() {
                     newVal = valNorm.replace(/^All changes since (.+)$/i, (match, branch) => {
                         return USE_TW ? ("自 " + branch + " 以來的所有變更") : ("自 " + branch + " 以来的所有更改");
                     });
+                } else if (/^including\s+(\\d+)\s+active\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^including\s+(\\d+)\s+active\s+conversations?(\\.)?$/i, (match, num, dot) => {
+                        return (USE_TW ? ("包含 " + num + " 個使用中的對話") : ("包含 " + num + " 个活动对话")) + (dot ? "。" : "");
+                    });
+                } else if (/^including\s+(\\d+)\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^including\s+(\\d+)\s+conversations?(\\.)?$/i, (match, num, dot) => {
+                        return (USE_TW ? ("包含 " + num + " 個對話") : ("包含 " + num + " 个对话")) + (dot ? "。" : "");
+                    });
+                } else if (/^(.+?)\s+including\s+(\\d+)\s+active\s+conversations?\\.?$/i.test(valNorm)) {
+                    newVal = valNorm.replace(/^(.+?)\s+including\s+(\\d+)\s+active\s+conversations?(\\.)?$/i, (match, p, num, dot) => {
+                        return p + " " + (USE_TW ? ("包含 " + num + " 個使用中的對話") : ("包含 " + num + " 个活动对话")) + (dot ? "。" : "");
+                    });
                 } else if (/^(.+?): context deadline exceeded$/i.test(valNorm)) {
                     newVal = valNorm.replace(/^(.+?): context deadline exceeded$/i, (match, prefix) => {
                         return prefix + (USE_TW ? ": 請求超時 (context deadline exceeded)" : ": 请求超时 (context deadline exceeded)");

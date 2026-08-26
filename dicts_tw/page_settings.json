@@ -512,5 +512,8 @@
     "View breakdown": "檢視細目",
     "View Breakdown": "檢視細目",
     "Breakdown": "細目",
-    "breakdown": "細目"
+    "breakdown": "細目",
+    "Permanently delete this project and all of its conversation history.": "永久刪除該專案及其所有對話記錄。",
+    "active conversations": "個使用中的對話",
+    "active conversation": "個使用中的對話"
 }
