@@ -62,6 +62,7 @@ if (USE_TW) {
         "[还原] 正在用官方备份文件恢复...": "[還原] 正在用官方備份檔案恢復...",
         "[还原] 已重置当前 app.asar 为官方原始备份包，以进行全新注入...": "[還原] 已重置目前 app.asar 為官方原始備份包，以進行全新注入...",
         "[权限] 检测到当前用户对 macOS 应用目录缺少写入权限，正在尝试请求管理员权限 (sudo) 重新运行...": "[權限] 偵測到目前使用者對 macOS 應用程式目錄缺少寫入權限，正在嘗試請求管理員權限 (sudo) 重新執行...",
+        "[权限] 检测到当前用户对 Linux 应用目录缺少写入权限，正在尝试请求管理员权限 (sudo) 重新运行...": "[權限] 偵測到目前使用者對 Linux 應用程式目錄缺少寫入權限，正在嘗試請求管理員權限 (sudo) 重新執行...",
         "[提示] 当前 app.asar 被锁定（可能是客户端正在运行），将使用当前包进行增量注入。": "[提示] 目前 app.asar 被鎖定（可能是用戶端正在執行），將使用目前包進行增量注入。",
         "[还原] 已恢复 HTML: ": "[還原] 已恢復 HTML: ",
         "[还原] 已删除汉化脚本": "[還原] 已刪除漢化指令碼",
@@ -692,8 +693,8 @@ function checkIfAppIsRunning() {
         if (process.platform === 'win32') {
             const stdout = child_process.execSync('tasklist /fi "imagename eq Antigravity.exe" /nh', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
             return stdout.toLowerCase().includes('antigravity.exe');
-        } else if (process.platform === 'darwin') {
-            const stdout = child_process.execSync('pgrep -f Antigravity', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+        } else if (process.platform === 'darwin' || process.platform === 'linux') {
+            const stdout = child_process.execSync('pgrep -f -i antigravity', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
             return stdout.trim().length > 0;
         }
     } catch (e) {
@@ -708,7 +709,7 @@ function closeAntigravityProcesses() {
         if (process.platform === 'win32') {
             child_process.execSync('taskkill /f /im Antigravity.exe /t >nul 2>nul');
         } else {
-            child_process.execSync('pkill -f Antigravity >/dev/null 2>&1');
+            child_process.execSync('pkill -f -i antigravity >/dev/null 2>&1 || true');
         }
     } catch (e) {
         // ignore
@@ -789,6 +790,38 @@ function detectInstallationDir(manualDir) {
     } else if (process.platform === 'darwin') {
         addCandidate("/Applications/Antigravity.app");
         addCandidate(path.join(process.env.HOME || '', 'Applications', 'Antigravity.app'));
+    } else if (process.platform === 'linux') {
+        addCandidate(process.env.ANTIGRAVITY_INSTALL_DIR);
+        addCandidate(process.env.ANTIGRAVITY_HOME);
+        
+        addCandidate("/opt/Antigravity");
+        addCandidate("/opt/antigravity");
+        addCandidate("/usr/lib/antigravity");
+        addCandidate("/usr/lib/Antigravity");
+        addCandidate("/usr/share/antigravity");
+        addCandidate("/usr/share/Antigravity");
+        addCandidate("/usr/local/lib/antigravity");
+        addCandidate("/usr/local/share/antigravity");
+        
+        const homeDir = process.env.HOME || '';
+        if (homeDir) {
+            addCandidate(path.join(homeDir, ".local", "share", "antigravity"));
+            addCandidate(path.join(homeDir, ".local", "share", "Antigravity"));
+            addCandidate(path.join(homeDir, ".local", "lib", "antigravity"));
+            addCandidate(path.join(homeDir, ".local", "lib", "Antigravity"));
+            addCandidate(path.join(homeDir, ".antigravity"));
+            addCandidate(path.join(homeDir, "antigravity"));
+            addCandidate(path.join(homeDir, "Antigravity"));
+        }
+        
+        try {
+            const binPath = child_process.execSync('which antigravity 2>/dev/null || which Antigravity 2>/dev/null', { encoding: 'utf-8', stdio: 'pipe' }).trim();
+            if (binPath && fs.existsSync(binPath)) {
+                const realBin = fs.realpathSync(binPath);
+                addCandidate(path.dirname(realBin));
+                addCandidate(path.dirname(path.dirname(realBin)));
+            }
+        } catch (e) {}
     }
 
     for (const p of candidates) {
@@ -840,13 +873,14 @@ function resignAppOnMac(anyPath) {
 }
 
 function ensureWritePermission(targetDir) {
-    if (process.platform !== 'darwin') return true;
+    if (process.platform === 'win32') return true;
     try {
         fs.accessSync(targetDir, fs.constants.W_OK);
         return true;
     } catch (err) {
         if (process.getuid && process.getuid() !== 0) {
-            console.log("[权限] 检测到当前用户对 macOS 应用目录缺少写入权限，正在尝试请求管理员权限 (sudo) 重新运行...");
+            const osName = process.platform === 'darwin' ? 'macOS' : 'Linux';
+            console.log(`[权限] 检测到当前用户对 ${osName} 应用目录缺少写入权限，正在尝试请求管理员权限 (sudo) 重新运行...`);
             const args = process.argv.slice(1);
             const res = child_process.spawnSync('sudo', [process.execPath, ...args], {
                 stdio: 'inherit'
@@ -1366,6 +1400,40 @@ function main() {
             } else if (process.platform === 'darwin') {
                 child_process.exec(`open "${installDir}"`);
                 console.log("[启动] 客户端启动成功！");
+            } else if (process.platform === 'linux') {
+                const linuxBinCandidates = [
+                    path.join(installDir, 'antigravity'),
+                    path.join(installDir, 'Antigravity'),
+                    '/usr/bin/antigravity',
+                    '/usr/local/bin/antigravity',
+                    '/opt/antigravity/antigravity',
+                    '/opt/Antigravity/Antigravity'
+                ];
+                let launched = false;
+                for (const bin of linuxBinCandidates) {
+                    if (fs.existsSync(bin)) {
+                        const child = child_process.spawn(bin, [], {
+                            detached: true,
+                            stdio: 'ignore'
+                        });
+                        child.unref();
+                        launched = true;
+                        console.log("[启动] 客户端启动成功！");
+                        break;
+                    }
+                }
+                if (!launched) {
+                    try {
+                        const child = child_process.spawn('antigravity', [], {
+                            detached: true,
+                            stdio: 'ignore'
+                        });
+                        child.unref();
+                        console.log("[启动] 客户端启动成功！");
+                    } catch (e) {
+                        console.warn(`[警告] 未找到客户端主程序，请手动启动 Antigravity。`);
+                    }
+                }
             }
         } catch (e) {
             console.warn(`[警告] 客户端启动失败: ${e.message}`);

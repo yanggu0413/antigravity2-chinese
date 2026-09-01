@@ -2,7 +2,7 @@
 
 👉 **[繁體中文版說明文件 (Traditional Chinese README)](README_TW.md)**
 
-> **支持系统**：Windows & macOS（均内置一键脚本）  
+> **支持系统**：Windows、macOS & Linux（全平台均内置一键脚本）  
 > **匹配版本**：Google Antigravity 2.0+ / v2.9.1+  
 > **核心引擎**：Node.js（原生零依赖，秒级注入与无损还原）  
 > **本地化范围**：包括编辑器全界面、顶部系统菜单、系统托盘右键菜单、加载动画、详细设置面板、MCP 知识库、新手引导及登录页。  
@@ -46,12 +46,16 @@
 ```text
 ├── 雙擊安裝繁體中文.bat           # Windows 繁體中文一鍵安裝
 ├── 雙擊安裝繁體中文.command       # macOS 繁體中文一鍵安裝
+├── 安裝繁體中文_Linux.sh          # Linux 繁體中文一鍵安裝
 ├── 雙擊解除安裝還原官方英文.bat    # Windows 繁體中文一鍵還原官方英文
 ├── 雙擊解除安裝還原官方英文.command# macOS 繁體中文一鍵還原官方英文
+├── 解除安裝還原官方英文_Linux.sh   # Linux 繁體中文一鍵還原官方英文
 ├── 双击安装简体中文.bat           # Windows 简体中文一键安装
 ├── 双击安装简体中文.command       # macOS 简体中文一键安装
+├── 安装简体中文_Linux.sh          # Linux 简体中文一键安装
 ├── 双击卸载还原官方英文.bat        # Windows 简体中文一键还原官方英文
 ├── 双击卸载还原官方英文.command    # macOS 简体中文一键还原官方英文
+├── 卸载还原官方英文_Linux.sh       # Linux 简体中文一键还原官方英文
 ├── localization_engine.js        # 核心注入引擎（ASAR 解包/代码注入/重包/macOS 重签名）
 ├── dicts/                        # 简体中文词库（按模块分类的 JSON 字典）
 ├── dicts_tw/                     # 繁体中文词库（按台湾开发习惯分类的 JSON 字典）
