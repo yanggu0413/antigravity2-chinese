@@ -3,7 +3,7 @@
 👉 **[簡體中文版說明文件 (Simplified Chinese README)](README.md)**
 
 > **支援系統**：Windows、macOS & Linux（全平台均內建一鍵執行指令檔）  
-> **相容版本**：Google Antigravity 2.0+ / v2.9.1+  
+> **相容版本**：Google Antigravity v2.9.1+；已補充 v2.21.0 的 Automations、Run Now、Create with Prompt 與 Advanced Search 詞條（詞典檢查通過，尚未實機驗證 v2.21.0 注入）。\
 > **核心引擎**：Node.js（原生零依賴，秒級注入與無損還原）  
 > **在地化範圍**：包含編輯器全介面、頂部系統選單、系統匣右鍵選單、載入動畫、詳細設定面板、MCP 知識庫、新手引導及登入頁。  
 > **注入原理**：透過 ASAR 解包與重包，安全注入 `preload.js` 動態翻譯機制，絕不修改核心二進位檔案，一鍵安裝與完美還原。  
@@ -142,6 +142,12 @@ node localization_engine.js --huifu
    - **發送截圖**：`“幫我把這張截圖裡所有未翻譯的英文內容補全到 dicts_tw/ 對應的詞典中。”`
    - **文字描述**：`“幫我把英文 'Custom Rule' 翻譯為 '自訂規則' 並儲存到繁體字典。”`
 3. AI 自動修改 JSON 詞典後，完全結束 Antigravity，重新執行安裝批次檔即可生效！
+
+---
+
+## 詞典驗證
+
+修改詞典後執行 `node scratch/compare_dicts.js`。檢查會驗證繁簡詞典檔案與 key 集合一致、翻譯為非空字串，並確認 v2.21.0 的四個新增或改名 UI 詞條仍然存在。舊版 Scheduled Tasks 相關詞條保留，以相容舊版本。新增詞條依據 [官方 v2.21.0 changelog（2026-10-06）](https://gweb-jetski.appspot.com/docs/changelog/#v2210)；未確認的 UI 文案不作推測補充。此檢查不會安裝或注入用戶端。
 
 ---
 
